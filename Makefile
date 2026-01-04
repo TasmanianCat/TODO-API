@@ -10,18 +10,13 @@ help:
 	@echo "  make clear      - Clear caches"
 
 install:
-	composer install
-	npm install
+	php composer install
 
-dev: install
-	npm run dev &
+dev:
 	php artisan serve --host=0.0.0.0 --port=8000
 
 serve:
 	php artisan serve --host=0.0.0.0 --port=8000
-
-assets:
-	npm run dev
 
 test:
 	php artisan test
@@ -32,4 +27,11 @@ clear:
 	php artisan view:clear
 	php artisan cache:clear
 
-run-dev: dev
+migrate:
+	php artisan migrate
+
+swagger-gen:
+	php artisan l5-swagger:generate
+
+run-tests:
+	./vendor/bin/phpunit

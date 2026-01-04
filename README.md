@@ -1,59 +1,214 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Todo API Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A RESTful API for managing todo tasks built with Laravel and OpenAPI/Swagger documentation.
 
-## About Laravel
+### !Important
+ Find Postman collection Todo API.postman_collection.json in the project directory
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Complete CRUD operations** for tasks
+- **OpenAPI/Swagger documentation** automatically generated
+- **Request validation** using DTO pattern
+- **Clean architecture** with separation of concerns
+- **Makefile commands** for easy development workflow
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## API Endpoints
 
-## Learning Laravel
+| Method | Endpoint | Description | Status Codes |
+|--------|----------|-------------|--------------|
+| GET | `/api/tasks` | Get all tasks | 200 |
+| POST | `/api/tasks` | Create a new task | 201, 422 |
+| GET | `/api/tasks/{id}` | Get specific task | 200, 404 |
+| PUT | `/api/tasks/{id}` | Update a task | 200, 404, 422 |
+| DELETE | `/api/tasks/{id}` | Delete a task | 204, 404 |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.5
+- Composer
+- Laravel 12.0
+- SQLite
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Clone the repository**
+```
+git clone       <your-repository-url>
+cd <project-directory>
+```
 
-### Premium Partners
+2. **Install dependencies**
+```
+make install
+# or
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. **Configure environment**
+```
+cp .env.example .env
+php artisan key:generate
+```
+Edit .env file with your database credentials.
 
-## Contributing
+4. **Run migrations**
+```
+make migrate
+# or
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Development Commands
 
-## Code of Conduct
+The project includes a Makefile with convenient commands:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+# Show all available commands
+make help
 
-## Security Vulnerabilities
+# Install dependencies
+make install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Start development server (default: http://localhost:8000)
+make dev
+# or
+make serve
 
-## License
+# Run tests
+make test
+# or
+make run-tests
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Clear application caches
+make clear
+
+# Generate Swagger/OpenAPI documentation
+make swagger-gen
+
+# Run database migrations
+make migrate
+```
+
+## API Documentation
+
+This project uses OpenAPI annotations for automatic API documentation generation.
+
+Access Swagger UI:
+
+```
+http://localhost:8000/api/documentation
+```
+
+Generate documentation:
+```
+make swagger-gen
+```
+
+The API documentation will be available at the /api/documentation endpoint after generation.
+
+## Project Structure
+```
+app/
+├── Http/
+│   └── Controllers/
+│       └── TaskController.php  # Main API controller
+├── Models/
+│   └── Task.php               # Task model
+└── Dto/
+    └── TaskDTO.php            # Data Transfer Object for validation
+```
+
+## DTO (Data Transfer Object)
+
+The project uses a TaskDTO class for request validation. This ensures:
+
+    Consistent validation rules across create and update operations
+
+    Type safety
+
+    Separation of validation logic from controllers
+
+Example TaskDTO::rules() method should define validation rules for task attributes.
+
+## Testing
+
+Run the test suite:
+```
+make test
+# or
+./vendor/bin/phpunit
+```
+
+## Development Workflow
+
+1. Start the development server:
+```
+make dev
+```
+
+2. Access the API at http://localhost:8000/api
+
+3. View API documentation at http://localhost:8000/api/documentation
+
+4. After making changes to OpenAPI annotations, regenerate documentation:
+```
+make swagger-gen
+```
+
+## Example Usage
+
+### Create a task:
+```
+curl -X POST http://localhost:8000/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Buy groceries",
+    "description": "Milk, eggs, bread",
+    "completed": false
+  }'
+```
+
+## Get all tasks:
+```
+curl http://localhost:8000/api/tasks
+```
+
+## Update a task::
+```
+curl -X PUT http://localhost:8000/api/tasks/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "completed": true
+  }'
+```
+
+## Delete a task::
+```
+curl -X DELETE http://localhost:8000/api/tasks/1
+```
+
+## Dependencies
+
+Main dependencies include:
+
+    Laravel Framework
+
+    zircote/swagger-php for OpenAPI annotations
+
+    darkaonline/l5-swagger for Swagger UI integration
+
+    PHPUnit for testing
+
+### Quick Start Summary:
+```
+# Clone, install, and run
+git clone <repo>
+cd <project>
+make install
+cp .env.example .env
+php artisan key:generate
+# Edit .env with your DB credentials
+make migrate
+make dev
+```
