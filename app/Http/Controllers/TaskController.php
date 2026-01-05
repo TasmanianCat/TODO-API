@@ -14,7 +14,7 @@ use OpenApi\Attributes as OA;
     title: 'Todo API',
     description: 'API for managing todo tasks'
 )]
-#[OA\Server(url: 'http://localhost:8000/api', description: 'Local Server')]
+#[OA\Server(url: 'http://localhost:8080/', description: 'Local Server')]
 #[OA\Tag(name: 'Tasks', description: 'Task management operations')]
 class TaskController extends Controller
 {
